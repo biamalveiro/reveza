@@ -16,14 +16,17 @@ export const contribution = ({
   driver: Driver;
   window: number;
 }) => {
-  return data.slice(0, window).reduce((acc, row) => {
-    if (!row.practice || !row.driver?.[0]) return acc;
-    if (row.driver?.[0].value === driver) {
-      if (row.ride) return acc + 1;
-      return acc + 0.5;
-    }
-    return acc;
-  }, 0);
+  return data
+    .filter((row) => row.practice)
+    .slice(0, window)
+    .reduce((acc, row) => {
+      if (!row.practice || !row.driver?.[0]) return acc;
+      if (row.driver?.[0].value === driver) {
+        if (row.ride) return acc + 1;
+        return acc + 0.5;
+      }
+      return acc;
+    }, 0);
 };
 
 const WIDTH = 300;
@@ -75,7 +78,10 @@ export default function Gauge({ data }: { data: Row[] }) {
     outerRadius: HEIGHT - MARGIN.top - MARGIN.bottom,
   });
 
-  const text = `${strength(shareBia)} a ${shareBia > 0.5 ? "Smarta" : "Bia"}`;
+  const text =
+    shareBia === 0.5
+      ? "Tanto faz"
+      : `${strength(shareBia)} a ${shareBia > 0.5 ? "Smarta" : "Bia"}`;
 
   return (
     <div className="flex flex-col gap-2 items-center">
@@ -131,7 +137,8 @@ export default function Gauge({ data }: { data: Row[] }) {
       <span
         className={cn(
           "font-semibold underline underline-offset-4",
-          shareBia > 0.5 ? "decoration-red-500" : "decoration-blue-500"
+          shareBia > 0.5 ? "decoration-red-500" : "decoration-blue-500",
+          shareBia === 0.5 && "decoration-slate-800 dark:decoration-slate-200"
         )}
       >
         {text}

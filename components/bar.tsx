@@ -19,18 +19,16 @@ export default function Bars({ data }: { data: Row[] }) {
   const [sliderValue, setSliderValue] = React.useState(window);
 
   const bars = useMemo(() => {
+    const practices = data.filter((row) => row.practice).slice(0, window);
+
     return [
       {
         driver: "bia" as const,
-        data: data
-          .slice(0, window)
-          .filter((row) => row.driver?.[0]?.value === "bia"),
+        data: practices.filter((row) => row.driver?.[0]?.value === "bia"),
       },
       {
         driver: "smarta" as const,
-        data: data
-          .slice(0, window)
-          .filter((row) => row.driver?.[0]?.value === "smarta"),
+        data: practices.filter((row) => row.driver?.[0]?.value === "smarta"),
       },
     ];
   }, [data, window]);

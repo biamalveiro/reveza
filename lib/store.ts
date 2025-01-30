@@ -6,6 +6,6 @@ type Store = {
 };
 
 export const useStore = create<Store>((set) => ({
-  window: 16,
+  window: 12,
   setWindow: (window: number) => set({ window }),
 }));
