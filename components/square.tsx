@@ -17,7 +17,12 @@ export default function Square({ row }: { row: Row }) {
         >
           {!row.practice && <span>🚫</span>}
           {driver ? (
-            <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+            <svg
+              viewBox="0 0 100 100"
+              width={16}
+              height={16}
+              xmlns="http://www.w3.org/2000/svg"
+            >
               <path
                 d="M 0 0 L 100 0 L 0 100  Z"
                 className={
@@ -42,10 +47,15 @@ export default function Square({ row }: { row: Row }) {
           ) : (
             <>
               {row.practice && (
-                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                <svg
+                  viewBox="0 0 100 100"
+                  width={16}
+                  height={16}
+                  xmlns="http://www.w3.org/2000/svg"
+                >
                   <path
                     d="M 100 0 L 0 100"
-                    className="dark:stroke-slate-200 stroke-slate-800 "
+                    className="dark:stroke-slate-200 stroke-slate-800  "
                   />
                 </svg>
               )}
