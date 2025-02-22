@@ -1,6 +1,7 @@
 import Bars from "@/components/bar";
 import Calendar from "@/components/calendar";
 import Gauge from "@/components/gauge";
+import Legend from "@/components/legend";
 import { Button } from "@/components/ui/button";
 import { fetchRows } from "@/lib/data";
 import { setDefaultOptions } from "date-fns";
@@ -11,13 +12,16 @@ export default async function Home() {
   const data = await fetchRows();
 
   return (
-    <div className="flex flex-col items-center justify-items-center gap-8 min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
+    <div className="flex lg:w-1/2 mx-auto flex-col items-center justify-items-center gap-8 min-h-screen p-8 pb-20 sm:p-20 font-[family-name:var(--font-geist-sans)]">
       <div>
         <h1 className="text-3xl font-semibold">reveza</h1>
       </div>
       <div className="flex flex-col gap-12 pt-10">
         <Gauge data={data} />
-        <Bars data={data} />
+        <div className="flex flex-wrap w-full gap-12 justify-between">
+          <Bars data={data} />
+          <Legend />
+        </div>
         <Calendar data={data} />
       </div>
       <footer className="mt-20">

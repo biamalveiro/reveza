@@ -21,7 +21,7 @@ export const contribution = ({
     .slice(0, window)
     .reduce((acc, row) => {
       if (!row.practice || !row.driver?.[0]) return acc;
-      if (row.driver?.[0].value === driver) {
+      if (row.driver?.map((d) => d.value).includes(driver)) {
         if (row.ride) return acc + 1;
         return acc + 0.5;
       }

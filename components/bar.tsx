@@ -24,17 +24,23 @@ export default function Bars({ data }: { data: Row[] }) {
     return [
       {
         driver: "bia" as const,
-        data: practices.filter((row) => row.driver?.[0]?.value === "bia"),
+        data: practices.filter((row) => {
+          const drivers = row.driver?.map((d) => d.value);
+          return drivers.includes("bia");
+        }),
       },
       {
         driver: "smarta" as const,
-        data: practices.filter((row) => row.driver?.[0]?.value === "smarta"),
+        data: practices.filter((row) => {
+          const drivers = row.driver?.map((d) => d.value);
+          return drivers.includes("smarta");
+        }),
       },
     ];
   }, [data, window]);
 
   return (
-    <div>
+    <div className="max-w-1/2 flex-grow-0">
       <div className="flex gap-1 mb-2">
         <span>Considerando os ultimos</span>
         <Popover>
@@ -47,8 +53,8 @@ export default function Bars({ data }: { data: Row[] }) {
               onValueChange={(value) => {
                 setSliderValue(value[0]);
               }}
-              onValueCommit={(value) => {
-                setWindow(value[0]);
+              onValueCommit={() => {
+                setWindow(sliderValue);
               }}
               min={4}
               step={4}
@@ -62,7 +68,7 @@ export default function Bars({ data }: { data: Row[] }) {
         <TooltipProvider>
           {bars.map(({ driver, data }) => {
             return (
-              <div key={driver} className="flex gap-1">
+              <div key={driver} className="flex flex-wrap flex-grow-0 gap-1">
                 <span className="mr-1">{driver === "bia" ? "B" : "S"}</span>
                 {data.map((row) => (
                   <Square key={row.date} row={row} />
