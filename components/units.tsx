@@ -14,7 +14,7 @@ import { TooltipProvider } from "./ui/tooltip";
 import { Badge } from "./ui/badge";
 import { contribution } from "./gauge";
 
-export default function Bars({ data }: { data: Row[] }) {
+export default function Units({ data }: { data: Row[] }) {
   const { window, setWindow } = useStore();
   const [sliderValue, setSliderValue] = React.useState(window);
 

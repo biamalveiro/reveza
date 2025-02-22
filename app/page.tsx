@@ -1,4 +1,4 @@
-import Bars from "@/components/bar";
+import Units from "@/components/units";
 import Calendar from "@/components/calendar";
 import Gauge from "@/components/gauge";
 import Legend from "@/components/legend";
@@ -19,7 +19,7 @@ export default async function Home() {
       <div className="flex flex-col gap-12 pt-10">
         <Gauge data={data} />
         <div className="flex flex-wrap w-full gap-12 justify-between">
-          <Bars data={data} />
+          <Units data={data} />
           <Legend />
         </div>
         <Calendar data={data} />

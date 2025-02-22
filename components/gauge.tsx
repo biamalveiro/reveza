@@ -33,9 +33,7 @@ const WIDTH = 300;
 const HEIGHT = 100;
 const MARGIN = {
   top: 10,
-  right: 10,
   bottom: 10,
-  left: 10,
 };
 
 const ARC_COLORS = [
@@ -87,11 +85,7 @@ export default function Gauge({ data }: { data: Row[] }) {
     <div className="flex flex-col gap-2 items-center">
       <h2 className=" text-lg font-medium">Quem deve levar hoje?</h2>
       <svg width={WIDTH} height={HEIGHT}>
-        <g
-          transform={`translate(${WIDTH / 2 + MARGIN.left},${
-            HEIGHT - MARGIN.bottom
-          })`}
-        >
+        <g transform={`translate(${WIDTH / 2},${HEIGHT - MARGIN.bottom})`}>
           {arcs.map(({ shape, color }, i) => {
             return <path key={i} d={shape || ""} className={color} />;
           })}
@@ -105,11 +99,7 @@ export default function Gauge({ data }: { data: Row[] }) {
           /> */}
           <circle r={2} className="fill-slate-800 dark:fill-slate-200" />
         </g>
-        <g
-          transform={`translate(${WIDTH / 2 + MARGIN.left},${
-            HEIGHT - MARGIN.bottom
-          })`}
-        >
+        <g transform={`translate(${WIDTH / 2},${HEIGHT - MARGIN.bottom})`}>
           <motion.g
             initial={{
               rotate: 0,
