@@ -1,11 +1,19 @@
 "use client";
 
 import { Driver, Row } from "@/lib/data";
-import React from "react";
-import { arc } from "d3-shape";
-import cn from "classnames";
 import { useStore } from "@/lib/store";
+import cn from "classnames";
+import { arc } from "d3-shape";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { Button } from "./ui/button";
+import { Dices } from "lucide-react";
+import { capitalize } from "@/lib/utils";
+
+const randomizeDriver = () => {
+  const drivers = ["bia", "smarta"] as Driver[];
+  return drivers[Math.floor(Math.random() * drivers.length)];
+};
 
 export const contribution = ({
   data,
@@ -56,6 +64,7 @@ export default function Gauge({ data }: { data: Row[] }) {
   const countSmarta = contribution({ data, driver: "smarta", window });
   const countBia = contribution({ data, driver: "bia", window });
   const shareBia = countBia / (countSmarta + countBia);
+  const [randomDriver, setRandomDriver] = useState<Driver | null>(null);
 
   const arcs = [...Array(6).keys()].map((i) => {
     return {
@@ -124,15 +133,60 @@ export default function Gauge({ data }: { data: Row[] }) {
           </motion.g>
         </g>
       </svg>
-      <span
-        className={cn(
-          "font-semibold underline underline-offset-4",
-          shareBia > 0.5 ? "decoration-red-500" : "decoration-blue-500",
-          shareBia === 0.5 && "decoration-slate-800 dark:decoration-slate-200"
-        )}
-      >
-        {text}
-      </span>
+      {!randomDriver && (
+        <motion.div
+          className="flex gap-2 items-center"
+          exit={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+        >
+          <span
+            className={cn(
+              "font-semibold underline underline-offset-4",
+              shareBia > 0.5 ? "decoration-red-500" : "decoration-blue-500",
+              shareBia === 0.5 &&
+                "decoration-slate-800 dark:decoration-slate-200"
+            )}
+          >
+            {text}
+          </span>
+          {shareBia === 0.5 && (
+            <Button
+              size="icon"
+              variant="ghost"
+              className=" hover:animate-spin rounded-full"
+              onClick={() => setRandomDriver(randomizeDriver())}
+            >
+              <Dices size={16} />
+            </Button>
+          )}
+        </motion.div>
+      )}
+      {randomDriver && (
+        <motion.div
+          className="flex gap-2 items-center h-9"
+          initial={{
+            opacity: 0,
+          }}
+          animate={{
+            opacity: 1,
+          }}
+        >
+          <span
+            className={cn(
+              "font-semibold underline underline-offset-4",
+              randomDriver === "smarta"
+                ? "decoration-red-500"
+                : "decoration-blue-500"
+            )}
+          >
+            a {capitalize(randomDriver)}{" "}
+          </span>
+        </motion.div>
+      )}
     </div>
   );
 }
